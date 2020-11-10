@@ -150,11 +150,10 @@ $(document).ready(function(e) {
 
 $('#upload').on('change',function(){
 	var formData = new FormData();
-	console.log($(this))
 	var name = $($(this)).val();
-    var files = $($(this))[0].files[0];
+	var files = $($(this))[0].files[0];
     formData.append("file", files);
-    formData.append("name", name);
+    formData.append("name", files.name);
     $.ajax({
         url: '/uploadImage',
         type: 'POST',
