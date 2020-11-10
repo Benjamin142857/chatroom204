@@ -17,7 +17,12 @@
         <div id="contents"></div>
       </div>
       <div id="content_saying">
-        <div id="toolbar"></div>
+      <div id="toolbar">
+          <label for='upload' class='uploadImage'>
+            <div class="inputBox" style="font-size: 20px;">🌠</div>
+          </label>
+          <input type="file" name="file"  id='upload' accept="image/*" style="display: none;"></input>
+        </div>
         <div id="input_content" contenteditable="true">
         </div>
         <div id="sayingto">你好 <span id="from"></span> ，你正在对 <span id="to"></span> 说</div>

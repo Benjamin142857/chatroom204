@@ -171,3 +171,11 @@
   background: #666;
   background: rgba(0,0,0,0.5);
 }
+.uploadImage {
+  float: right;
+  padding-right: 20px;
+}
+ .uploadImage .inputBox {
+   cursor: pointer;
+   font-size: 20px;
+ }

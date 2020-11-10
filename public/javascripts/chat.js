@@ -147,3 +147,26 @@ $(document).ready(function(e) {
 	}
 	$.cookie('isLogin',true);
 });
+
+$('#upload').on('change',function(){
+	var formData = new FormData();
+	console.log($(this))
+	var name = $($(this)).val();
+    var files = $($(this))[0].files[0];
+    formData.append("file", files);
+    formData.append("name", name);
+    $.ajax({
+        url: '/uploadImage',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false, 
+        dataType: 'json',
+        success:function (res) {
+            alert('上传成功');
+        }
+        ,error:function (res) {
+            alert('错误');
+        }
+    });
+})
