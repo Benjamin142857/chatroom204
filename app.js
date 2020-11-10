@@ -7,7 +7,8 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , multiparty = require("multiparty");
 
 var app = express();
 var server = http.createServer(app);
@@ -96,7 +97,7 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  // app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -140,6 +141,18 @@ app.get('/signup',function(req,res,next){
 app.post('/signin',function(req,res,next){
   res.cookie("user",req.body.username[0]);
   res.redirect('/');
+});
+app.post('/uploadImage', function(req, res, next) {
+  console.log(req.body,"body")
+  //生成multiparty对象，并配置上传目标路径
+  var form = new multiparty.Form({ uploadDir: './public/images' });
+  form.parse(req, function(err, fields, files) {
+    console.log(fields, files,' fields2')
+    if (err) {
+    } else {
+      res.json({ imgSrc: `/images/${path.basename(files.file[0].path)}` })
+    }
+  });
 });
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
