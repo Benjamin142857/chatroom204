@@ -143,14 +143,12 @@ app.post('/signin',express.bodyParser(),function(req,res,next){
   res.redirect('/');
 });
 app.post('/uploadImage', function(req, res, next) {
-  console.log(req.body,"body")
   //生成multiparty对象，并配置上传目标路径
-  var form = new multiparty.Form({ uploadDir: './public/images' });
+  var form = new multiparty.Form({ uploadDir: './public/upload' });
   form.parse(req, function(err, fields, files) {
-    console.log(fields, files,' fields2')
     if (err) {
     } else {
-      res.json({ imgSrc: `/images/${path.basename(files.file[0].path)}` })
+      res.json({ imgSrc: `/upload/${path.basename(files.file[0].path)}` })
     }
   });
 });
