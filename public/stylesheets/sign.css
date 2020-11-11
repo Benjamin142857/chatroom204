@@ -20,6 +20,15 @@
 .form_line{
   width: 100%;
   height: 30px;
+  padding-top: 25px;
+  margin: 5px 0px;
+  line-height: 30px;
+}
+.form_botton {
+  position: absolute;
+  bottom: 65px;
+  width: 100%;
+  height: 30px;
   margin: 5px 0px;
   line-height: 30px;
 }
