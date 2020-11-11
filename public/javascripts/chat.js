@@ -164,7 +164,7 @@ $(document).ready(function(e) {
 			success:function (res) {
 				var name = res.imgSrc.replace('/upload/','')
 				name = name.replace(/\..*/, '')
-				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px" class="smallImg" data-name="${name}"></img>`+'</div>'}));
+				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px;cursor: pointer;" class="smallImg" data-name="${name}"></img>`+'</div>'}));
 			}
 			,error:function (res) {
 				alert('图片发送错误');
