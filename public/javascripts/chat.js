@@ -163,7 +163,6 @@ $(document).ready(function(e) {
 			dataType: 'json',
 			success:function (res) {
 				var name = res.imgSrc.replace('/upload/','')
-				name = name.replace(/\..*/, '')
 				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px;cursor: pointer;" class="smallImg" data-name="${name}"></img>`+'</div>'}));
 			}
 			,error:function (res) {
@@ -176,11 +175,13 @@ $(document).ready(function(e) {
 		$.ajax({
 			url: `/bigImg?name=${imgName}`,
 			type: 'GET',
-			success: () => {
-				console.log('success')
+			dataType: 'json',
+			success: (res) => {
+				$('.model').addClass('show')
+				$('.model img').attr("src", res.imgSrc)
 			},
 			error: () => {
-				console.log('error')
+				alert('找不到原图')
 			}
 		})
 	})
@@ -199,7 +200,10 @@ $(document).ready(function(e) {
 			}
 		});
 	});
-
+	$('.model').on('click', () => {
+		console.log(111)
+		$('.model').removeClass('show')
+	})
 
 });
 

@@ -179,3 +179,24 @@
    cursor: pointer;
    font-size: 20px;
  }
+
+ .model {
+   display: none;
+   width: 100vw;
+   height: 100vh;
+   position: fixed;
+   background-color: rgba(0, 0, 0, 0.5);
+ }
+
+ .model.show {
+  display: block;
+  z-index: 99999;
+ }
+
+.model img {
+  max-height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
