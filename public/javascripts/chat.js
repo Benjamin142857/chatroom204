@@ -162,13 +162,28 @@ $(document).ready(function(e) {
 			contentType: false, 
 			dataType: 'json',
 			success:function (res) {
-				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px"></img>`+'</div>'}));
+				var name = res.imgSrc.replace('/upload/','')
+				name = name.replace(/\..*/, '')
+				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px" class="smallImg" data-name="${name}"></img>`+'</div>'}));
 			}
 			,error:function (res) {
 				alert('图片发送错误');
 			}
 		});
 	});
+	$('body').on('click', '.smallImg', (e) => {
+		let imgName = $(e.target).data('name')
+		$.ajax({
+			url: `/bigImg?name=${imgName}`,
+			type: 'GET',
+			success: () => {
+				console.log('success')
+			},
+			error: () => {
+				console.log('error')
+			}
+		})
+	})
 	$('#log_out').click(function(){
 		$.ajax({
 			url: '/signout',
