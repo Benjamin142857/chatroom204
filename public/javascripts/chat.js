@@ -193,6 +193,7 @@ $(document).ready(function(e) {
 			contentType: false,
 			success:function (res) {
 				console.log('注销成功');
+				socket.close();
 				$(window).attr('location','/signin');
 			}
 			,error:function (res) {

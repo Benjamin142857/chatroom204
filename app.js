@@ -158,15 +158,15 @@ app.post('/uploadImage', function(req, res, next) {
   var form = new multiparty.Form({ uploadDir: './public/upload' });
   form.parse(req, function(err, fields, files) {
     if (err) {
+      res.json({ retCode: -1, errMsg: err });
     } else {
       var fileName = path.basename(files.file[0].path);
       var compressFileName = `compress_${fileName}`;
 
       // 存放略缩图
-      images(`./public/upload/${fileName}`) //Load image from file
-          .size(200) //等比缩放图像到400像素宽
-          .save(`./public/upload/${compressFileName}`, {quality : 50});
-      res.json({ imgSrc: `/upload/${compressFileName}` })
+      images(`./public/upload/${fileName}`)
+          .save(`./public/upload/${compressFileName}`, {quality : 30});
+      res.json({ retCode: 0, imgSrc: `/upload/${compressFileName}` })
     }
   });
 });
@@ -177,7 +177,7 @@ app.get('/bigImg', function(req, res, next) {
     fileName = compressFileName.slice(9);
   }
   else {
-    res.json({ retCode: -1, imgSrc: 'the fileName not a compress png' });
+    res.json({ retCode: -1, errMsg: 'the fileName not a compress png' });
   }
   res.json({ retCode: 0, imgSrc: `/upload/${fileName}` });
 });
