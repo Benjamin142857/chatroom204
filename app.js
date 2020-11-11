@@ -8,7 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , multiparty = require("multiparty");
+  , multiparty = require("multiparty")
+  , images = require("images");
 
 var app = express();
 var server = http.createServer(app);
@@ -139,11 +140,11 @@ app.get('/signup',function(req,res,next){
   res.sendfile('./views/signup.html');
 });
 app.post('/signin',express.bodyParser(),function(req,res,next){
-  if (users.includes(req.body.username[0])) {
+  if (users.includes(req.body.username)) {
     res.json({ retCode: -1, errMsg: '该用户名已在聊天室中, 请尝试换一个.' })
   }
   else {
-    res.cookie("user",req.body.username[0]);
+    res.cookie("user",req.body.username);
     res.redirect('/');
   }
 });
@@ -158,7 +159,14 @@ app.post('/uploadImage', function(req, res, next) {
   form.parse(req, function(err, fields, files) {
     if (err) {
     } else {
-      res.json({ imgSrc: `/upload/${path.basename(files.file[0].path)}` })
+      var fileName = path.basename(files.file[0].path);
+      var compressFileName = `compress_${fileName}`;
+
+      // 存放略缩图
+      images(`./public/upload/${fileName}`) //Load image from file
+          .size(200) //等比缩放图像到400像素宽
+          .save(`./public/upload/${compressFileName}`, {quality : 50});
+      res.json({ imgSrc: `/upload/${compressFileName}` })
     }
   });
 });
