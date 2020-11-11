@@ -168,6 +168,23 @@ $(document).ready(function(e) {
 				alert('图片发送错误');
 			}
 		});
-	})
+	});
+	$('#log_out').click(function(){
+		$.ajax({
+			url: '/signout',
+			type: 'GET',
+			processData: false,
+			contentType: false,
+			success:function (res) {
+				console.log('注销成功');
+				$(window).attr('location','/signin');
+			}
+			,error:function (res) {
+				alert('注销失败');
+			}
+		});
+	});
+
+
 });
 

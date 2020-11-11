@@ -139,8 +139,18 @@ app.get('/signup',function(req,res,next){
   res.sendfile('./views/signup.html');
 });
 app.post('/signin',express.bodyParser(),function(req,res,next){
-  res.cookie("user",req.body.username[0]);
-  res.redirect('/');
+  if (users.includes(req.body.username[0])) {
+    res.json({ retCode: -1, errMsg: '该用户名已在聊天室中, 请尝试换一个.' })
+  }
+  else {
+    res.cookie("user",req.body.username[0]);
+    res.redirect('/');
+  }
+});
+app.get('/signout',express.bodyParser(),function(req,res,next){
+  res.cookie("user", '', { expires: new Date(0)});
+  res.cookie("isLogin", '', { expires: new Date(0)});
+  res.json({ retCode: 0 })
 });
 app.post('/uploadImage', function(req, res, next) {
   //生成multiparty对象，并配置上传目标路径
