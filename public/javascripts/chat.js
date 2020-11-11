@@ -162,7 +162,7 @@ $(document).ready(function(e) {
 			contentType: false, 
 			dataType: 'json',
 			success:function (res) {
-				addMsg('<div>'+from+'('+getTimeShow((new Date).getTime())+')说：<br/>'+`<img src=${res.imgSrc} style="max-width: 200px"></img>`+'</div>');
+				socket.emit('say',JSON.stringify({to:to,from:from,msg:'<div>'+`<img src=${res.imgSrc} style="max-width: 200px"></img>`+'</div>'}));
 			}
 			,error:function (res) {
 				alert('图片发送错误');
