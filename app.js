@@ -170,6 +170,17 @@ app.post('/uploadImage', function(req, res, next) {
     }
   });
 });
+app.get('/bigImg', function(req, res, next) {
+  var compressFileName = req.query.name;
+  var fileName = '';
+  if (compressFileName.indexOf('compress_') === 0) {
+    fileName = compressFileName.slice(9);
+  }
+  else {
+    res.json({ retCode: -1, imgSrc: 'the fileName not a compress png' });
+  }
+  res.json({ retCode: 0, imgSrc: `/upload/${fileName}` });
+});
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
