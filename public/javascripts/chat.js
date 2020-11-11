@@ -146,26 +146,28 @@ $(document).ready(function(e) {
 		return time;
 	}
 	$.cookie('isLogin',true);
+	
+	$('#upload').on('change',function(){
+		var formData = new FormData();
+		var name = $($(this)).val();
+		var files = $($(this))[0].files[0];
+		formData.append("file", files);
+		formData.append("name", files.name);
+
+		$.ajax({
+			url: '/uploadImage',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false, 
+			dataType: 'json',
+			success:function (res) {
+				addMsg('<div>'+from+'('+getTimeShow((new Date).getTime())+')说：<br/>'+`<img src=${res.imgSrc} style="max-width: 200px"></img>`+'</div>');
+			}
+			,error:function (res) {
+				alert('图片发送错误');
+			}
+		});
+	})
 });
 
-$('#upload').on('change',function(){
-	var formData = new FormData();
-	var name = $($(this)).val();
-	var files = $($(this))[0].files[0];
-    formData.append("file", files);
-    formData.append("name", files.name);
-    $.ajax({
-        url: '/uploadImage',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false, 
-        dataType: 'json',
-        success:function (res) {
-            alert('上传成功');
-        }
-        ,error:function (res) {
-            alert('错误');
-        }
-    });
-})
