@@ -138,7 +138,7 @@ app.get('/signin',function(req,res,next){
 app.get('/signup',function(req,res,next){
   res.sendfile('./views/signup.html');
 });
-app.post('/signin',function(req,res,next){
+app.post('/signin',express.bodyParser(),function(req,res,next){
   res.cookie("user",req.body.username[0]);
   res.redirect('/');
 });
